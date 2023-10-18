@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <style>
+                        .CustomerId .o_td_label>label {
+                        display: inline-table;
+                        font-size: 25px;
+                        margin-top: -5px;
+                        }
+                    </style>
+                    <group>
+                        <group style="width: 50%"></group>
+                        <group class="CustomerId" style="width: 50%">
+                            <field name="customer_rank" invisible="1"/>
+                            <field name="supplier_rank" invisible="1"/>
+                            <field name="x_customer_id" string="CustomerID" readonly="1"
+                                   attrs="{'invisible': [('x_customer_id','=',False)]}"/>
+                            <field name="x_vendor_id" string="VendorID" readonly="1"
+                                   attrs="{'invisible': [('x_vendor_id','=',False)]}"/>
+                        </group>
+                    </group>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="inherit_res_partner_search_view" model="ir.ui.view">
+            <field name="name">Inherit Res Partner Search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="x_customer_id"/>
+                    <field name="x_vendor_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
